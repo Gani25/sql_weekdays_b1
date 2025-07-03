@@ -40,3 +40,25 @@ where first_name like "A__E";
 select * from actor
 where first_name like "A__E%";
 
+
+select * from country;
+select * from sprk;
+
+select distinct continent from world.country;
+
+-- Order By Default ASC
+select * from actor;
+
+-- Single Level SOrting
+select * from actor
+order by first_name;
+
+select * from actor
+order by first_name desc;
+
+
+
+
+
+
+
