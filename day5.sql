@@ -40,3 +40,72 @@ Alter
 3. Modify Column
 4. Rename Coloumn | Table
 */
+
+select * from student;
+
+alter table student 
+add gender varchar(10);
+
+select * from student;
+
+alter table student
+drop gender;
+
+select * from student;
+
+alter table student
+add gender varchar(10) after last_name;
+
+select * from student;
+
+alter table student 
+add college_id int first;
+
+select *  from student;
+
+alter table student
+drop college_id;
+
+select * from student;
+
+
+alter table student
+drop gender;
+
+
+alter table student
+add gender varchar(10) not null default "Male" after last_name;
+
+select * from student;
+
+alter table student
+drop gender;
+
+
+alter table student
+add gender varchar(1) after last_name;
+
+select * from student;
+
+-- update
+update student 
+set gender = "Male"
+where roll_no = 1; -- ERROR
+describe student;
+-- modify 
+alter table student
+modify gender varchar(12);
+
+desc student;
+
+update student 
+set gender = "Male"
+where roll_no = 1;
+
+select * from student;
+
+update student 
+set gender = "Male"
+where roll_no in (2,3,10,16);
+
+select * from student;
