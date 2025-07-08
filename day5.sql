@@ -26,8 +26,17 @@ insert into student(roll_no,email,first_name, last_name, phone)
 select * from student;
 
 insert into student(email,first_name, last_name, phone)
- values
+values
 ("shruti@gmail.com", "Shruti","Sharma",
 "4852100255");
 
+
 select * from student;
+
+/*
+Alter
+1. Add Column | Constraint
+2. Drop Column | Constraint
+3. Modify Column
+4. Rename Coloumn | Table
+*/
