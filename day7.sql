@@ -82,3 +82,4 @@ insert into  student values
 
 select * from student;
 select * from course;
+
