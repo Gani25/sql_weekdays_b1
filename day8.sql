@@ -104,3 +104,9 @@ select s.roll_no, s.course_id, c.c_name, c.c_duration from student s
 left join course c 
 on s.course_id = c.c_id
 order by roll_no;
+
+
+select s.*, c_name, c_duration from student s 
+inner join course c 
+on course_id = c_id
+order by roll_no;
