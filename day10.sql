@@ -46,3 +46,27 @@ select "SPRK TECHNOLOGIES", substr("SPRK TECHNOLOGIES",6);
 select "SPRK TECHNOLOGIES", substr("SPRK TECHNOLOGIES",12);
 select "SPRK TECHNOLOGIES", substr("SPRK TECHNOLOGIES",1,4);
 select "SPRK TECHNOLOGIES", substr("SPRK TECHNOLOGIES",6,6);
+
+-- Maths Functions
+select round(5.22286), round(5.22286,2);
+select ceil(5.22286), ceil(-5.22286);
+select floor(5.22286), floor(-5.22286);
+select pow(5,3);
+select abs(-5);
+select pi();
+select rand();
+select sqrt(9);
+
+select now(), current_timestamp();
+
+select adddate(now(), interval 10 day);
+select adddate(now(), interval 1 month);
+select adddate(now(), interval 1 year);
+select adddate(now(), interval -1 year);
+select adddate("2025-01-31", interval 1 month);
+select addtime("2025-01-31 10:15:20", "4:00:00");
+
+select now(), date(now());
+
+select date_format(now(),"%d-%m-%Y %h:%i:%s %p");
+select date_format(now(),"%d-%m-%Y %r");
