@@ -70,3 +70,13 @@ select now(), date(now());
 
 select date_format(now(),"%d-%m-%Y %h:%i:%s %p");
 select date_format(now(),"%d-%m-%Y %r");
+
+select day(now());
+select dayname(now());
+select monthname(now());
+select dayofmonth(now());
+select dayofweek(now());
+select dayofyear(now());
+select last_day(now());
+
+select "1999-11-26", year(now()) - year("1999-11-26") age
