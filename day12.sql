@@ -123,3 +123,49 @@ select * from employee
 where (dept_name, salary) in 
 (select dept_name, max(salary) from employee
 group by dept_name);
+
+use classicmodels;
+select * from customers;
+select * from orders;
+select * from orderdetails;
+select * from products;
+
+-- S12_1099, S10_1678, S12_4473 
+-- FIND ALL CUSTOMERS INFO WHO BOUGHT ANY OF THE ABOVE PRODUCT
+
+select * from orderdetails 
+where productCode in ("S12_1099", "S10_1678", "S12_4473");
+
+select * from customers
+where customerNumber in 
+(
+	select customerNumber from orders 
+    where orderNumber in
+    (
+		select orderNumber from orderDetails
+        where productCode in ("S12_1099", "S10_1678", "S12_4473")
+	)
+);
+
+select * from customers
+where customerNumber in 
+(
+	select customerNumber from orders 
+    where orderNumber in
+    (
+		select orderNumber from orderDetails
+        where productCode = "S10_1678"
+	)
+);
+-- = any same as in
+
+select * from customers
+where customerNumber =any
+(
+	select customerNumber from orders 
+    where orderNumber =any
+    (
+		select orderNumber from orderDetails
+        where productCode = "S10_1678"
+	)
+);
