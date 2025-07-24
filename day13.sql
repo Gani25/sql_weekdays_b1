@@ -46,6 +46,15 @@ where salary >
         where e2.dept_name = e1.dept_name
 	);
 
+explain analyze
+select * from employee e1
+where salary >
+	(
+		select avg(salary) from employee e2
+        where e2.dept_name = e1.dept_name
+	);
+
+
 -- Corelated Subquery
 -- Subquery in select statement as a column
 use classicmodels;
@@ -69,7 +78,7 @@ concat_ws(" ", contactFirstName, contactLastName) contactName,
  from customers c;
  
 -- Find customer with 0 orders
- 
+
 select * from
 (
 	select customerNumber, customerName,
