@@ -91,3 +91,25 @@ select * from
 	 from customers c
 ) cust_order_count
 where order_count =0;
+
+use sprk_weekdays;
+
+-- Find Employee who earns second highest salary
+select * from employee;
+select * from employee
+order by salary desc;
+select * from employee
+order by salary desc
+limit 2 offset 1;
+
+-- Subquery
+select max(salary) from employee; #highest
+select max(salary) from employee
+where salary < (select max(salary) from employee); #2nd highest
+
+
+select * from employee
+where salary = (
+	select max(salary) from employee
+	where salary < (select max(salary) from employee)
+);
