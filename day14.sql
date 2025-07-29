@@ -53,3 +53,42 @@ values
 (772,1301,51,15000);
 
 select * from category_revenue;
+
+
+-- Views More Examples
+-- Abstraction (hiding things)
+show tables;
+select * from employee;
+
+create view emp_info as
+select emp_id, name, dept_name, dob
+from employee;
+
+select * from emp_info;
+
+-- mysql supported nested views
+
+create view emp_info_it as
+select * from emp_info
+where dept_name = "IT";
+
+select * from emp_info_it;
+
+create view emp_info_it_with_a
+as
+select * from emp_info_it 
+where name like "%a%";
+select * from emp_info_it_with_a;
+
+select * from employee
+where name like "%a%" and 
+dept_name = "IT";
+
+select * from emp_info;
+-- VIEW Supports DML(Insert, Update, Delete) Operations 
+update emp_info
+set name = "Abdul Gani Memon"
+where emp_id = 10;
+
+select * from emp_info;
+select * from employee;
