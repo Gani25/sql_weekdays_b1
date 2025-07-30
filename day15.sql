@@ -106,3 +106,46 @@ select * from customers;
 select * from orders;
 select * from orderdetails;
 select * from products;
+
+
+-- in param and out param
+use sprk_weekdays;
+select * from orders;
+select distinct status from orders;
+
+-- Variables: Named container to store data temporary
+select @age;
+set @age = 30;
+select @age;
+
+-- Procedure pass status as input - 
+-- and I want numbers of orders(count) in that status
+
+select count(*) from orders
+where status = "Returned";
+
+desc orders;
+
+
+delimiter $
+drop procedure if exists count_by_status $
+
+create procedure count_by_status
+(
+	in order_status text, 
+    out order_count int
+)
+begin
+	select count(*) into order_count from orders
+	where status = order_status;
+end $
+delimiter ;
+
+select @ord_count;
+call count_by_status("Delivered", @ord_count);
+
+
+select @ord_count;
+
+call count_by_status("Returned", @ord_count);
+select @ord_count;
