@@ -60,3 +60,35 @@ select last_insert_id();
 
 
 call insert_emp("Ashutosh Sharma","IT","1998-01-20",4500);
+
+-- case statements
+select * from employee;
+
+-- If IT 20% bonus
+-- If Sales 25% bonus
+-- No bonus to any other departments
+SELECT 
+    *,
+    CASE dept_name
+        WHEN 'IT' THEN salary + 0.2 * salary
+        WHEN 'Sales' THEN salary + 0.25 * salary
+        ELSE salary
+    END updated_sal
+FROM
+    employee;
+    
+SELECT 
+    *,
+    CASE
+        WHEN
+            name = 'Rohit Gupta'
+                AND dept_name = 'Sales'
+        THEN
+            salary - 0.5 * salary
+        WHEN dept_name = 'IT' THEN salary + 0.2 * salary
+        WHEN dept_name = 'Sales' THEN salary + 0.25 * salary
+        WHEN emp_id = 4 THEN salary + salary
+        ELSE salary
+    END updated_salary
+FROM
+    employee;
