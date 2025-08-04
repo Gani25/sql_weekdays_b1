@@ -78,3 +78,69 @@ update user_info
 set first_name = "aBdUL", last_name = "mEMon"
 where id = 6;
 select * from user_info;
+
+-- Update
+create table user_info_metadata as
+select * from user_info;
+
+select * from user_info_metadata;
+desc user_info_metadata;
+truncate table user_info_metadata;
+
+alter table user_info_metadata 
+modify id int;
+
+desc user_info_metadata;
+
+alter table user_info_metadata 
+modify first_name varchar(50);
+alter table user_info_metadata 
+modify last_name varchar(50);
+alter table user_info_metadata 
+modify password varchar(66);
+
+alter table user_info_metadata 
+modify last_update datetime;
+
+select * from user_info_metadata;
+
+alter table user_info_metadata
+add status varchar(60) after password;
+
+select * from user_info;
+select * from user_info_metadata;
+
+delimiter $
+create trigger tr3
+after update on user_info
+for each row
+begin
+	insert into user_info_metadata values
+    (old.id, old.first_name, old.last_name, 
+    old.password, "Before Update", old.last_update);
+    insert into user_info_metadata values
+    (new.id, new.first_name, new.last_name, 
+    new.password, "After Update", new.last_update);
+
+end $
+delimiter ;
+
+
+show triggers;
+
+select * from user_info;
+update user_info
+set password = "885556"
+where id = 4;
+
+
+select * from user_info;
+select * from user_info_metadata;
+
+update user_info
+set password = "4108520", first_name="Kshitij"
+where id = 4;
+
+
+select * from user_info;
+select * from user_info_metadata;
