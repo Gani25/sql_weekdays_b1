@@ -144,3 +144,40 @@ where id = 4;
 
 select * from user_info;
 select * from user_info_metadata;
+
+select * from user_info;
+alter table user_info add dob date after password;
+
+select * from user_info;
+truncate table user_info;
+
+select * from user_info;
+
+create table reminder
+(
+	rid int primary key auto_increment,
+    user_id int ,
+    message varchar(100)
+)
+
+delimiter $
+create trigger insert_reminder
+after insert on user_info
+for each row
+begin
+	if new.dob is null
+    then
+		insert into reminder (user_id, message ) values 
+		(new.id, concat_ws(" ","Hello", new.first_name, new.last_name,
+		" please insert dob to complete profile"));
+	end if;
+end $
+delimiter ;
+
+select * from user_info;
+INSERT INTO `sprk_weekdays`.`user_info` (`first_name`, `last_name`, `password`) VALUES ('Rohit', 'Verma', '121212');
+select * from user_info;
+select * from reminder;
+
+
+
