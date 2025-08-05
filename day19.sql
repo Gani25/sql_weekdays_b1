@@ -110,3 +110,89 @@ commit;
 select * from employee;
 rollback;
 select * from employee;
+
+
+create table accounts(
+	account_number int primary key,
+    name varchar(50),
+    balance double
+);
+
+insert into accounts values
+(1,"Rohit",3500),
+(2,"Shubham",1000);
+
+select * from accounts;
+
+set autocommit = true;
+
+create table transaction_history
+(
+	tr_id int primary key auto_increment,
+    sender_acc_number int,
+    receiver_acc_number int,
+    amount double,
+    created_at datetime default now()
+);
+
+delimiter $
+drop procedure if exists transactions $
+create procedure transactions
+(
+	from_acc_num int,
+	to_acc_num int,
+	amount double
+)
+begin
+	declare sender_balance double;
+	set autocommit = false;
+    
+    select balance into sender_balance from accounts
+    where account_number = from_acc_num;
+    
+    if sender_balance - amount >= 1500
+    then 
+    -- logic of deduction
+    update accounts 
+    set balance = balance - amount
+    where account_number = from_acc_num;
+    
+	update accounts 
+    set balance = balance + amount
+    where account_number = to_acc_num;
+    
+    insert into transaction_history values 
+    (default,from_acc_num, to_acc_num, amount, default);
+    
+    commit;
+    select 
+    concat("Transaction Completed. Amount transferred is = ",
+    amount) as success;
+    else
+    rollback;
+    select concat(from_acc_num," Insufficient balance") as error;
+    end if;
+    
+    set autocommit = true;
+    
+end $
+
+delimiter ;
+
+select * from transaction_history;
+call transactions(1,2,500);
+
+select * from accounts;
+select * from transaction_history;
+call transactions(2,1,500);
+
+select * from accounts;
+select * from transaction_history;
+call transactions(1,2,1500);
+
+select * from accounts;
+
+select * from transaction_history;
+call transactions(2,2,1500);
+
+select * from accounts;
