@@ -65,3 +65,50 @@ select * from
 (select *, dense_rank() over(order by salary desc) as sal_rank
 from employee) emp_rank
 where sal_rank =3;
+
+select *, percent_rank() over(partition by dept_name order by salary) * 100 as sal_rank
+from employee;
+
+-- value function lead, lag, nthvalue, first, last
+
+create table train_timetable
+(
+	t_id int,
+	train_time time,
+    station varchar(50)
+);
+
+insert into train_timetable
+values 
+(101,"08:10:00","CST"),
+(102,"09:15:00","Panvel"),
+(101,"08:30:00","Dadar"),
+(103,"10:15:00","Virar"),
+(102,"09:45:00","Vashi"),
+(102,"09:30:00","Belapur"),
+(101,"08:18:00","Byculla"),
+(103,"10:30:00","Malad"),
+(102,"10:15:00","Wadala"),
+(102,"10:35:00","CST"),
+(101,"08:50:00","Thane"),
+(101,"09:25:00","Kalyan"),
+(103,"10:50:00","Bandra"),
+(103,"11:25:00","Churchgate");
+
+select * from train_timetable;
+select *, ifnull(lead(station,1) over(partition by t_id),"train ends" )nxt_station 
+from train_timetable;
+select *, ifnull(lead(station,2) over(partition by t_id order by train_time ),"train ends" )nxt_station 
+from train_timetable;
+
+select *, ifnull(lead(station,1) over(partition by t_id order by train_time ),
+"train ends" )nxt_station,
+ifnull(lag(station,1) over(partition by t_id order by train_time ),
+"train starts" )prev_station
+from train_timetable;
+
+select *, last_value(station) over(partition by t_id) last_station 
+from train_timetable;
+
+select *, nth_value(station,2) over(partition by t_id order by train_time)  
+from train_timetable;
